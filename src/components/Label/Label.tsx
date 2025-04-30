@@ -16,23 +16,23 @@ const appearanceStyles = {
 const Label: React.FC<LabelProps> = ({
     text,
     htmlFor,
-    status = 'default',
+    state = 'default',
     size = 'md',
     appearance = 'primary',
 }) => {
     const baseStyle = 'block font-medium';
-    const statusElement =
-      status === 'required' ? <span className="text-red-500 ml-1">*</span> :
-      status === 'optional' ? <span className="text-gray-400 ml-1 italic">(opcional)</span> : null;
+    const stateElement =
+      state === 'required' ? <span className="text-red-500 ml-1">*</span> :
+      state === 'optional' ? <span className="text-gray-400 ml-1 italic">(opcional)</span> : null;
   
     return (
       <label
         htmlFor={htmlFor}
         className={clsx(baseStyle, sizeStyles[size], appearanceStyles[appearance])}
-        aria-required={status === 'required' || undefined}
+        aria-required={state === 'required' || undefined}
       >
         {text}
-        {statusElement}
+        {stateElement}
       </label>
     );
 };

@@ -7,7 +7,7 @@ const meta: Meta<typeof Label> = {
   tags: ['autodocs', 'test'],
   args: {
     text: 'Label',
-    status: 'default',
+    state: 'default',
     size: 'md',
     appearance: 'primary',
   },
@@ -20,9 +20,9 @@ type Story = StoryObj<typeof Label>;
 export const Default: Story = {};
 
 export const Required: Story = {
-    args: { status: 'required' },
-  };
-  
-  export const Optional: Story = {
-    args: { status: 'optional' },
-  };
+  args: { state: 'required' },
+};
+
+export const Optional: Story = {
+  args: { state: 'optional' },
+};
