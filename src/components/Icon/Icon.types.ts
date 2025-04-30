@@ -1,9 +1,14 @@
 export type IconName =
-    | 'inicio'
+    | 'star'
+    | 'info'
+    | 'success'
+    | 'error'
+    | 'eye'
+    | 'eyeOff'
 ;
 
 export type IconComponentProps = {
-    fill: string;
+    fill?: string;
     size?: number | string;
 };
   

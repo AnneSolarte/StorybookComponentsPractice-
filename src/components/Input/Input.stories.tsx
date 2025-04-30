@@ -10,7 +10,7 @@ const meta: Meta<typeof Label> = {
     helperText: 'Message',
     style: 'default',
     showIcon: false,
-    icon: 'inicio',
+    icon: 'star',
     iconPosition: 'leading',
     disabled: false,
     state: 'default'

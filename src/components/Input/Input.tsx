@@ -10,13 +10,22 @@ const Input: React.FC<InputProps> = ({
   helperText,
   style = 'default',
   showIcon = false,
-  icon = 'inicio',
+  icon = 'star',
   iconPosition = 'leading',
   id,
   disabled = false,
-  state
+  state, 
+  onChange
 }) => {
   const [focused, setFocused] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    if (onChange) {
+      onChange(e.target.value);
+    }
+  };
 
   const inputClasses = clsx(
     'px-4 py-2 mt-1 border rounded-md w-full focus:outline-none text-sm',
@@ -39,19 +48,21 @@ const Input: React.FC<InputProps> = ({
           <div className="relative w-full">
             {showIcon && iconPosition === 'leading' && (
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <Icon name={icon} fill="#000000" size={18} />
+                <Icon name={icon} size={18} />
               </div>
             )}
 
             <input
               id={id}
               type="text"
+              value={inputValue} 
               className={inputClasses}
-                aria-invalid={style === 'error'}
-                aria-disabled={disabled}
-                onFocus={() => setFocused(true)}
-                onBlur={() => setFocused(false)}
-                disabled={disabled}
+              aria-invalid={style === 'error'}
+              aria-disabled={disabled}
+              onChange={handleChange}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              disabled={disabled}
               />
 
               {showIcon && iconPosition === 'trailing' && (
@@ -69,3 +80,4 @@ const Input: React.FC<InputProps> = ({
 };
 
 export default Input;
+

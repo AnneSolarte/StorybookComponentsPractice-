@@ -15,4 +15,5 @@ export type InputProps = {
   id: string;
   disabled?: boolean;
   state?: InputLabelState;
+  onChange?: (value: string) => void;
 };
