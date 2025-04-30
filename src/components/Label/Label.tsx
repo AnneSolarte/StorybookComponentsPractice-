@@ -3,9 +3,9 @@ import { LabelProps } from './Label.types';
 import clsx from 'clsx';
 
 const sizeStyles = {
-    sm: 'text-xs',
-    md: 'text-sm',
-    lg: 'text-base',
+    sm: 'text-sm',
+    md: 'text-md',
+    lg: 'text-lg',
 };
   
 const appearanceStyles = {
@@ -32,7 +32,7 @@ const Label: React.FC<LabelProps> = ({
         aria-required={state === 'required' || undefined}
       >
         {text}
-        {stateElement}
+        {stateElement}        
       </label>
     );
 };

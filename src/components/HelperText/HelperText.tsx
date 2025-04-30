@@ -35,3 +35,5 @@ export const HelperText: React.FC<HelperTextProps> = ({
     </p>
   );
 };
+
+export default HelperText;
