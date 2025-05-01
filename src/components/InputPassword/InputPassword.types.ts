@@ -1,7 +1,8 @@
 export interface InputPasswordProps {
   label: string;
   id: string;
+  value: string;
   helperText?: string;
   disabled?: boolean;
-  onChange?: (value: string) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
 }

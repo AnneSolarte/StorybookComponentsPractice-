@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SelectProps, Option, OptionGroup } from './Select.types';
 import clsx from 'clsx';
 import Label from '../Label/Label';
+import Icon from '../Icon/Icon';
 
 const isOptionGroup = (option: Option | OptionGroup): option is OptionGroup => {
   return (option as OptionGroup).options !== undefined;
@@ -10,6 +11,7 @@ const isOptionGroup = (option: Option | OptionGroup): option is OptionGroup => {
 const Select: React.FC<SelectProps> = ({
   options = [],
   value,
+  id,
   onChange,
   label,
   disabled = false,
@@ -27,11 +29,30 @@ const Select: React.FC<SelectProps> = ({
         }
     };
 
-    const handleOptionClick = (optionValue: string) => {
+        const handleOptionClick = (optionValue: string) => {
+        const syntheticEvent = {
+            target: {
+            value: optionValue,
+            name: id, 
+            id: id
+            },
+            currentTarget: {
+            value: optionValue,
+            name: id,
+            id: id
+            },
+            preventDefault: () => {},
+            stopPropagation: () => {},
+            nativeEvent: new Event('change')
+        } as unknown as React.ChangeEvent<HTMLSelectElement>;
+
         setSelectedValue(optionValue);
-        onChange(optionValue);
         setIsOpen(false);
-    };
+        
+        if (onChange) {
+            onChange(syntheticEvent);
+        }
+        };
 
     const findSelectedOption = (): Option | null => {
         for (const item of options) {
@@ -78,19 +99,7 @@ const Select: React.FC<SelectProps> = ({
                     aria-disabled={option.disabled}
                 >
                     {selectedValue === option.value && (
-                    <svg
-                        className="w-4 h-4 mr-2 text-blue-600 flex-shrink-0"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={3}
-                        d="M5 13l4 4L19 7"
-                        />
-                    </svg>
+                     <Icon name='check' fill='#155dfc' />
                     )}
                     <span className="truncate">{option.label}</span>
                 </button>
@@ -116,19 +125,7 @@ const Select: React.FC<SelectProps> = ({
                 aria-disabled={item.disabled}
             >
                 {selectedValue === item.value && (
-                <svg
-                    className="w-4 h-4 mr-2 text-blue-600 flex-shrink-0"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M5 13l4 4L19 7"
-                    />
-                </svg>
+                    <Icon name='check' fill='#155dfc' />
                 )}
                 <span className="truncate">{item.label}</span>
             </button>
@@ -142,13 +139,13 @@ const Select: React.FC<SelectProps> = ({
       {label && (
         <Label
           text={label}
-          htmlFor="select-input"
+          htmlFor={id}
         />
       )}
 
       <div className="relative w-full">
         <button
-          id="select-input"
+          id={id}
           onClick={toggleDropdown}
           className={clsx(
             'w-full px-4 py-2 text-left bg-white border rounded-md transition-all duration-200 flex items-center justify-between',
@@ -169,26 +166,12 @@ const Select: React.FC<SelectProps> = ({
             {selectedValue ? displayValue : 'Seleccione una opción'}
           </span>
           <span className="ml-2 flex-shrink-0">
-            <svg
-              className={clsx(
-                'w-5 h-5 transition-transform duration-200',
-                {
-                  'text-gray-700': selectedValue,
-                  'text-gray-400': !selectedValue,
-                  'transform rotate-180': isOpen,
-                }
-              )}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
+            {
+                isOpen ?
+                <Icon name='arrowUp'/>
+                :
+                <Icon name='arrowDown'/>
+            }
           </span>
         </button>
 

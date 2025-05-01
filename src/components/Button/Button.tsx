@@ -8,7 +8,8 @@ const Button: React.FC<ButtonProps> = ({
     loading = false,
     disabled = false,
     children,
-    ...props
+    type = 'button',
+    onClick
   }) => {
     const isDisabled = disabled || loading;
   
@@ -30,6 +31,12 @@ const Button: React.FC<ButtonProps> = ({
     };
   
     const disabledStyle = 'opacity-50 cursor-not-allowed';
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (!isDisabled && onClick) {
+          onClick(event);
+        }
+      };
   
     return (
       <button
@@ -41,7 +48,8 @@ const Button: React.FC<ButtonProps> = ({
         disabled={isDisabled}
         aria-disabled={isDisabled}
         aria-busy={loading}
-        {...props}
+        onClick={handleClick}
+        type={type}
       >
         {loading ? 'Cargando...' : children}
 

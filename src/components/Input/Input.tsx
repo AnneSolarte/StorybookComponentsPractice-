@@ -7,6 +7,7 @@ import Icon from '../Icon/Icon';
 
 const Input: React.FC<InputProps> = ({
   label,
+  value,
   helperText,
   style = 'default',
   showIcon = false,
@@ -18,12 +19,12 @@ const Input: React.FC<InputProps> = ({
   onChange
 }) => {
   const [focused, setFocused] = useState(false);
-  const [inputValue, setInputValue] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    console.log('value de mi input:', value);
+    
     if (onChange) {
-      onChange(e.target.value);
+      onChange(e);
     }
   };
 
@@ -54,8 +55,9 @@ const Input: React.FC<InputProps> = ({
 
             <input
               id={id}
+              name={id}
               type="text"
-              value={inputValue} 
+              value={value} 
               className={inputClasses}
               aria-invalid={style === 'error'}
               aria-disabled={disabled}

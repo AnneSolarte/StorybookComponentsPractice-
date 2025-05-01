@@ -1,11 +1,12 @@
 import './App.css'
+import FormExample from './components/Form/Form'
 
 function App() {
 
   return (
-    <>
-      <h1>Components Practice</h1>
-    </>
+    <section className="flex items-center justify-center min-h-screen w-full">
+      <FormExample />
+    </section>
   )
 }
 

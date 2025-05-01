@@ -6,14 +6,14 @@ export type InputLabelState = 'default' | 'required' | 'optional';
 
 export type InputProps = {
   label: string;
+  value: string;
   helperText?: string;
-  errorText?: string;
   style?: InputStyle;
   showIcon?: boolean;
-  icon: IconName;
+  icon?: IconName;
   iconPosition?: InputIconPosition;
   id: string;
   disabled?: boolean;
   state?: InputLabelState;
-  onChange?: (value: string) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
 };

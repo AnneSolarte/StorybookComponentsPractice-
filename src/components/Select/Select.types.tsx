@@ -13,9 +13,9 @@ export type SelectOption = Option | OptionGroup;
 
 export interface SelectProps {
   options?: SelectOption[];
+  id: string;
   value: string;
-  placeholder?: string;
   disabled?: boolean;
   label: string;
-  onChange: (value: string) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
 }

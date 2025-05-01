@@ -5,6 +5,9 @@ export type IconName =
     | 'error'
     | 'eye'
     | 'eyeOff'
+    | 'arrowDown'
+    | 'arrowUp'
+    | 'check'
 ;
 
 export type IconComponentProps = {

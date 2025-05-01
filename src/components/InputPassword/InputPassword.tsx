@@ -8,29 +8,29 @@ import { InputPasswordProps } from './InputPassword.types';
 const InputPassword: React.FC<InputPasswordProps> = ({
   label,
   id,
+  value,
   helperText,
   disabled = false,
   onChange
 }) => {
   const [visible, setVisible] = useState(false);
-  const [password, setPassword] = useState('');
   const [focused, setFocused] = useState(false);
 
   const toggleVisibility = () => setVisible(prev => !prev);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPassword(value);
-    onChange?.(value);
+    console.log('value de mi password:', value);
+    onChange?.(e);
   };
 
   const calculateStrength = (value: string): 'weak' | 'medium' | 'strong' => {
-    if (value.length > 8 && /[A-Z]/.test(value) && /\d/.test(value)) return 'strong';
-    if (value.length >= 6) return 'medium';
+    const val = value || '';
+    if (val.length > 8 && /[A-Z]/.test(val) && /\d/.test(val)) return 'strong';
+    if (val.length >= 6) return 'medium';
     return 'weak';
   };
 
-  const strength = calculateStrength(password);
+  const strength = calculateStrength(value);
 
   const inputClasses = clsx(
     'px-4 py-2 mt-1 border rounded-md w-full text-sm focus:outline-none text-gray-600',
@@ -54,7 +54,8 @@ const InputPassword: React.FC<InputPasswordProps> = ({
         <input
           id={id}
           type={visible ? 'text' : 'password'}
-          value={password}
+          value={value}
+          name={id}
           onChange={handleChange}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
@@ -73,7 +74,7 @@ const InputPassword: React.FC<InputPasswordProps> = ({
         </button>
       </div>
 
-      {strength && password && (
+      {strength && value && (
         <div className={`text-xs mt-1 ${strengthColor[strength]}`}>
           {strength === 'weak' ? (
               <HelperText text="La contraseña es débil." state="error" />
@@ -85,7 +86,7 @@ const InputPassword: React.FC<InputPasswordProps> = ({
         </div>
       )}
 
-      {!password && helperText && <HelperText text={helperText} />}
+      {!value && helperText && <HelperText text={helperText} />}
     </div>
   );
 };

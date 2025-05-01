@@ -20,7 +20,7 @@ const Label: React.FC<LabelProps> = ({
     size = 'md',
     appearance = 'primary',
 }) => {
-    const baseStyle = 'block font-medium';
+    const baseStyle = 'block font-medium self-start w-fit';
     const stateElement =
       state === 'required' ? <span className="text-red-500 ml-1">*</span> :
       state === 'optional' ? <span className="text-gray-400 ml-1 italic">(opcional)</span> : null;
