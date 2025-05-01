@@ -3,6 +3,7 @@ import { SelectProps, Option, OptionGroup } from './Select.types';
 import clsx from 'clsx';
 import Label from '../Label/Label';
 import Icon from '../Icon/Icon';
+import HelperText from '../HelperText/HelperText';
 
 const isOptionGroup = (option: Option | OptionGroup): option is OptionGroup => {
   return (option as OptionGroup).options !== undefined;
@@ -12,8 +13,13 @@ const Select: React.FC<SelectProps> = ({
   options = [],
   value,
   id,
+  name,
+  state,
   onChange,
   label,
+  helperText,
+  style,
+  placeholder,
   disabled = false,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -77,8 +83,10 @@ const Select: React.FC<SelectProps> = ({
         return options.map((item, index) => {
         if (isOptionGroup(item)) {
             return (
-            <div key={`group-${index}`} className="border-t border-gray-100 first:border-t-0">
-                <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <div 
+              key={`group-${index}`} 
+              className="border-t border-gray-100 first:border-t-0">
+                <div className="px-3 py-2 text-sm font-semibold text-gray-500 uppercase tracking-wider">
                 {item.label}
                 </div>
                 {item.options.map((option) => (
@@ -87,7 +95,7 @@ const Select: React.FC<SelectProps> = ({
                     onClick={() => !option.disabled && handleOptionClick(option.value)}
                     disabled={option.disabled}
                     className={clsx(
-                    'w-full px-4 py-2 text-left transition-colors flex items-center',
+                    'w-full px-4 py-2 text-left transition-colors text-xs flex items-center',
                     {
                         'bg-blue-100 text-blue-700 font-medium': selectedValue === option.value,
                         'text-gray-400 cursor-not-allowed': option.disabled,
@@ -113,7 +121,7 @@ const Select: React.FC<SelectProps> = ({
                 onClick={() => !item.disabled && handleOptionClick(item.value)}
                 disabled={item.disabled}
                 className={clsx(
-                'w-full px-4 py-2 text-left transition-colors flex items-center',
+                'w-full px-4 py-2 text-left text-sm transition-colors flex items-center',
                 {
                     'bg-blue-100 text-blue-700 font-medium': selectedValue === item.value,
                     'text-gray-400 cursor-not-allowed': item.disabled,
@@ -134,21 +142,24 @@ const Select: React.FC<SelectProps> = ({
         });
     };
 
+
   return (
     <div className="relative w-full">
       {label && (
         <Label
           text={label}
           htmlFor={id}
+          state={state}
         />
       )}
 
       <div className="relative w-full">
         <button
           id={id}
+          name={name}
           onClick={toggleDropdown}
           className={clsx(
-            'w-full px-4 py-2 text-left bg-white border rounded-md transition-all duration-200 flex items-center justify-between',
+            'w-full px-4 py-2 text-left text-sm bg-white border rounded-md transition-all duration-200 flex items-center justify-between',
             {
               'border-blue-500 ring-1 ring-blue-500': isOpen,
               'border-gray-300': !isOpen,
@@ -162,15 +173,16 @@ const Select: React.FC<SelectProps> = ({
           aria-haspopup="listbox"
           aria-expanded={isOpen}
         >
+
           <span className="truncate">
-            {selectedValue ? displayValue : 'Seleccione una opción'}
+            {selectedValue ? displayValue : placeholder}
           </span>
-          <span className="ml-2 flex-shrink-0">
+          <span className="">
             {
                 isOpen ?
-                <Icon name='arrowUp'/>
+                <Icon name='chevronUp' size={18}/>
                 :
-                <Icon name='arrowDown'/>
+                <Icon name='chevronDown' size={18}/>
             }
           </span>
         </button>
@@ -184,6 +196,14 @@ const Select: React.FC<SelectProps> = ({
               {renderOptions()}
             </div>
           </div>
+        )}
+
+        {helperText && (
+            <HelperText 
+              id={`${id}-helper`}
+              text={helperText} 
+              state={style === 'error' ? 'error' : 'default'} 
+            />
         )}
       </div>
     </div>

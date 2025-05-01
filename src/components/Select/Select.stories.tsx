@@ -9,7 +9,7 @@ const meta: Meta<typeof Select> = {
   argTypes: {
     disabled: { control: 'boolean' },
     label: { control: 'text' },
-    onChange: { action: 'changed' },
+    onChange: { action: 'changed' }
   }
 };
 

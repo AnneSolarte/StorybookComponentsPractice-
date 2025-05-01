@@ -14,6 +14,7 @@ export const HelperText: React.FC<HelperTextProps> = ({
   text,
   state = 'default',
   id,
+  className
 }) => {
 
   if (!text) return null;
@@ -23,7 +24,7 @@ export const HelperText: React.FC<HelperTextProps> = ({
         id={id}
         role={state === 'error' ? 'alert' : undefined}
         aria-live={state === 'error' ? 'polite' : undefined}
-        className={clsx('text-sm mt-1', stateStyles[state])}
+        className={clsx('text-sm mt-1', stateStyles[state], className)}
     >   
         <span className="flex row gap-2 items-center">
             {state !== 'default' && <Icon name={state} />}

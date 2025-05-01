@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import Label from '../Label/Label'; 
-import HelperText from '../HelperText/HelperText'; 
+import Label from '../Label/Label';
+import HelperText from '../HelperText/HelperText';
 import { InputProps } from './Input.types';
 import Icon from '../Icon/Icon';
 
@@ -9,77 +9,88 @@ const Input: React.FC<InputProps> = ({
   label,
   value,
   helperText,
+  type = 'text',
   style = 'default',
   showIcon = false,
   icon = 'star',
   iconPosition = 'leading',
   id,
+  name,
   disabled = false,
-  state, 
-  onChange
+  state,
+  className,
+  placeholder,
+  onChange,
 }) => {
   const [focused, setFocused] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('value de mi input:', value);
-    
-    if (onChange) {
-      onChange(e);
-    }
+    onChange?.(e);
   };
 
   const inputClasses = clsx(
-    'px-4 py-2 mt-1 border rounded-md w-full focus:outline-none text-sm',
+    'px-3 py-2 border rounded-md w-full text-sm transition-colors duration-200',
+    'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
+    
     {
-      'text-gray-600': !disabled,
-      'text-gray-400 bg-gray-100 cursor-not-allowed': disabled,
-      'border-gray-500': style === 'default' && !focused && !disabled,
-      'border-blue-500': (style === 'focus' || focused) && style !== 'error' && !disabled,
+      'text-gray-900 bg-white': !disabled,
+      'text-gray-500 bg-gray-100 cursor-not-allowed': disabled,
+      'border-gray-300': style === 'default' && !focused && !disabled,
+      'border-blue-500': focused && style !== 'error' && !disabled,
       'border-red-500': style === 'error' && !disabled,
-      'border-gray-200': disabled,
-      'pl-10': showIcon && iconPosition === 'leading',
-      'pr-10': showIcon && iconPosition === 'trailing',
-    }
+      'pl-9': showIcon && iconPosition === 'leading',
+      'pr-9': showIcon && iconPosition === 'trailing',
+      'h-20 text-left align-top': type === 'area'
+    },
+    className
   );
 
   return (
-    <div className="space-y-2">
-      <div>
+    <div className="space-y-1 w-full">
+      {label && (
         <Label htmlFor={id} text={label} state={state} />
-          <div className="relative w-full">
-            {showIcon && iconPosition === 'leading' && (
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <Icon name={icon} size={18} />
-              </div>
-            )}
+      )}
+      
+      <div className="relative">
+        {showIcon && iconPosition === 'leading' && (
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <Icon name={icon} size={16} className="text-gray-400" />
+          </div>
+        )}
 
-            <input
-              id={id}
-              name={id}
-              type="text"
-              value={value} 
-              className={inputClasses}
-              aria-invalid={style === 'error'}
-              aria-disabled={disabled}
-              onChange={handleChange}
-              onFocus={() => setFocused(true)}
-              onBlur={() => setFocused(false)}
-              disabled={disabled}
-              />
+        <input
+          id={id}
+          name={name}
+          type={type}
+          value={value}
+          placeholder={placeholder}
+          className={inputClasses}
+          aria-invalid={style === 'error'}
+          aria-disabled={disabled}
+          aria-required={state === 'required' ? true : undefined}
+          aria-describedby={helperText ? `${id}-helper` : undefined}
+          onChange={handleChange}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          disabled={disabled}
+        />
 
-              {showIcon && iconPosition === 'trailing' && (
-                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <Icon name={icon} fill="#000000" size={18} />
-                </div>
-              )}
-            </div>
+        {showIcon && iconPosition === 'trailing' && (
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <Icon name={icon} size={16} className="text-gray-400" />
+          </div>
+        )}
       </div>
-      {style === 'error' && helperText && (
-        <HelperText text={helperText} state="error" />
+
+      {helperText && (
+        <HelperText 
+          id={`${id}-helper`}
+          text={helperText} 
+          state={style === 'error' ? 'error' : 'default'} 
+        />
       )}
     </div>
   );
 };
 
 export default Input;
-

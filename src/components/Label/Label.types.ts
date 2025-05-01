@@ -8,4 +8,5 @@ export interface LabelProps {
   state?: LabelState;
   size?: LabelSize;
   appearance?: LabelAppearance;
+  className?: string
 }

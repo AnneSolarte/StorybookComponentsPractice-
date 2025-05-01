@@ -1,10 +1,22 @@
-
 import { IconProps } from './Icon.types';
 import { IconComponents } from '../../utils/icons';
+import clsx from 'clsx';
 
-export const Icon: React.FC<IconProps> = ({ name, fill, size = 24 }) => {
+export const Icon: React.FC<IconProps> = ({ 
+  name, 
+  fill, 
+  size = 24, 
+  className 
+}) => {
   const SelectedIcon = IconComponents[name];
-  return SelectedIcon ? <SelectedIcon fill={fill} size={size} /> : null;
+  
+  if (!SelectedIcon) return null;
+
+  return (
+    <span className={clsx('inline-flex', className)}>
+      <SelectedIcon fill={fill} size={size} />
+    </span>
+  );
 };
 
 export default Icon;

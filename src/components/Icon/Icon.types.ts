@@ -5,14 +5,15 @@ export type IconName =
     | 'error'
     | 'eye'
     | 'eyeOff'
-    | 'arrowDown'
-    | 'arrowUp'
+    | 'chevronDown'
+    | 'chevronUp'
     | 'check'
 ;
 
 export type IconComponentProps = {
     fill?: string;
     size?: number | string;
+    className?: string
 };
   
 export type IconProps = IconComponentProps & {

@@ -4,4 +4,5 @@ export interface HelperTextProps {
   text?: string;
   state?: HelperTextState;
   id?: string;
+  className?: string
 }

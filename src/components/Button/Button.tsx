@@ -9,12 +9,13 @@ const Button: React.FC<ButtonProps> = ({
     disabled = false,
     children,
     type = 'button',
+    className,
     onClick
   }) => {
     const isDisabled = disabled || loading;
   
-    const baseStyles = 'px-4 py-2 rounded-md border text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors';
-  
+    const baseStyles = `px-4 py-2 rounded-md border text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors ${className || ''}`;  
+    
     const appearanceStyles = {
       primary: {
         filled: 'bg-blue-600 text-white border-transparent hover:bg-blue-700 focus:ring-blue-500',
