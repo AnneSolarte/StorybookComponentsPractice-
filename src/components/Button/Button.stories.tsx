@@ -1,4 +1,3 @@
-// stories/Button.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
 import Button from './Button';
 
@@ -6,9 +5,13 @@ const meta: Meta<typeof Button> = {
   title: 'Components/Button',
   component: Button,
   tags: ['autodocs'],
+  argTypes: {
+    onClick: { action: 'clicked' },
+  },
   args: {
     appearance: 'primary',
     style: 'filled',
+    onClick: () => console.log('Hice cliiick'),
   },
 };
 
@@ -19,49 +22,23 @@ type Story = StoryObj<typeof Button>;
 export const FilledPrimary: Story = {
   args: {
     children: 'Primario Filled',
-    appearance: 'primary',
-    style: 'filled',
   },
 };
 
-export const OutlineSecondary: Story = {
+export const WithAlert: Story = {
   args: {
-    children: 'Secundario Outline',
-    appearance: 'secondary',
-    style: 'outline',
+    children: 'Mostrar alerta',
+    onClick: () => alert('¡Hiciste click!'),
   },
 };
 
-export const Text: Story = {
+export const WithComplexAction: Story = {
   args: {
-    children: 'Solo texto',
-    appearance: 'primary',
-    style: 'text',
-  },
-};
-
-export const ErrorButton: Story = {
-  args: {
-    children: 'Error',
-    appearance: 'primary',
-    style: 'error',
-  },
-};
-
-export const Loading: Story = {
-  args: {
-    children: 'Cargando...',
-    appearance: 'primary',
-    style: 'filled',
-    loading: true,
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    children: 'Deshabilitado',
-    appearance: 'secondary',
-    style: 'filled',
-    disabled: true,
+    children: 'Acción compleja',
+    onClick: (e) => {
+      e.preventDefault();
+      console.log('Evento:', e);
+      alert('Evento prevenido y registrado en consola');
+    },
   },
 };

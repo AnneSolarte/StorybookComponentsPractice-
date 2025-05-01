@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { HelperTextProps } from './HelperText.types';
+import Icon from '../Icon/Icon';
 
 const stateStyles = {
   default: 'text-gray-600',
@@ -8,12 +9,6 @@ const stateStyles = {
   success: 'text-green-600',
   info: 'text-cyan-600',
 };
-
-const iconState = {
-    error: '❌',
-    success: '✅',
-    info: 'ℹ️',
-}
 
 export const HelperText: React.FC<HelperTextProps> = ({
   text,
@@ -29,9 +24,12 @@ export const HelperText: React.FC<HelperTextProps> = ({
         role={state === 'error' ? 'alert' : undefined}
         aria-live={state === 'error' ? 'polite' : undefined}
         className={clsx('text-sm mt-1', stateStyles[state])}
-    >
-        <span className="mr-2">{state !== 'default' ? iconState[state] : null}</span>
-        {text}
+    >   
+        <span className="flex row gap-2 items-center">
+            {state !== 'default' && <Icon name={state} />}
+            {text}
+        </span>
+        
     </p>
   );
 };
